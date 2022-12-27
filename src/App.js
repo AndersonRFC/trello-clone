@@ -1,4 +1,4 @@
-import logo from "./logo.svg";
+// import logo from "./logo.svg";
 import "./App.css";
 import { useState } from "react";
 import { DragDropContext } from "react-beautiful-dnd";
@@ -6,6 +6,11 @@ import { Droppable } from "react-beautiful-dnd";
 import { Draggable } from "react-beautiful-dnd";
 import { Box, Paper, Typography } from "@mui/material";
 import Navbar from "./components/Navbar";
+import * as React from 'react';
+import Button from '@mui/material/Button';
+import AddIcon from '@mui/icons-material/Add';
+// import SendIcon from '@mui/icons-material/Send';
+// import Stack from '@mui/material/Stack';
 
 const inicialItems = [
   { id: "111", content: "Conteúdo 1" },
@@ -83,43 +88,48 @@ function App() {
 
   return (
     <Box sx={{ backgroundImage: "linear-gradient(45deg, #8587f3 30%, #fd84ae 100%)" }}>
-    <Navbar></Navbar>
-    <Box display="flex" justifyContent="center" height="100vh">
-      <DragDropContext onDragEnd={onDragEnd}>
-        {columns.map((column) => (
-          <Box style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
-            <Droppable droppableId={column.id} key={column.id}>
-              {(provided) => (
-                <Box ref={provided.innerRef} style={{ backgroundColor: "#ebebf1", width: 250, height: 500, padding: 10, margin: 10 }}>
-                  <Typography variant="h4">{column.name}</Typography>
-                  {column.items.map((item, index) => (
-                    <Draggable draggableId={item.id} index={index} key={item.id}>
-                      {(provided) => (
-                        <Paper
-                          elevation={2}
-                          {...provided.dragHandleProps}
-                          {...provided.draggableProps}
-                          ref={provided.innerRef}
-                          style={{
-                            height: 40,
-                            marginTop: 10,
-                            padding: 5,
-                            ...provided.draggableProps.style,
-                          }}
-                        >
-                          {item.content}
-                        </Paper>
-                      )}
-                    </Draggable>
-                  ))}
-                  {provided.placeholder}
-                </Box>
-              )}
-            </Droppable>
-          </Box>
-        ))}
-      </DragDropContext>
-    </Box>
+      <Navbar></Navbar>
+      <Box display="flex" justifyContent="center" height="100vh">
+        <DragDropContext onDragEnd={onDragEnd}>
+          {columns.map((column) => (
+            <Box style={{ display: "flex", flexDirection: "column", alignItems: "center" }}>
+              <Droppable droppableId={column.id} key={column.id}>
+                {(provided) => (
+                  <Box style={{ backgroundColor: "#ebebf1", width: 300, height: "fit-conent", padding: 10, margin: 10 }}>
+                    <Typography variant="h4">{column.name}</Typography>
+                    <Box ref={provided.innerRef} width="100%" height="100%">
+                      {column.items.map((item, index) => (
+                        <Draggable draggableId={item.id} index={index} key={item.id}>
+                          {(provided) => (
+                            <Paper
+                              elevation={2}
+                              {...provided.dragHandleProps}
+                              {...provided.draggableProps}
+                              ref={provided.innerRef}
+                              style={{
+                                height: 60,
+                                marginTop: 10,
+                                padding: 5,
+                                ...provided.draggableProps.style,
+                              }}
+                            >
+                              {item.content}
+                            </Paper>
+                          )}
+                        </Draggable>
+                      ))}
+                      {provided.placeholder}
+                      <Button sx={{marginTop: "10px", color: "#959dab"}} variant="outlined" startIcon={<AddIcon />}>
+                        Card
+                      </Button>
+                    </Box>
+                  </Box>
+                )}
+              </Droppable>
+            </Box>
+          ))}
+        </DragDropContext>
+      </Box>
     </Box>
   );
 }
